@@ -1,21 +1,17 @@
-data-ttn
-========
+cayene-lpp
+==========
 
-Parse JSONs from TTN MQTT API.
-
-See https://www.thethingsnetwork.org/docs/applications/mqtt/api.html
+Encode and decode Cayene Low Power Protocol
+(https://github.com/myDevicesIoT/cayenne-docs/blob/master/docs/LORA.md#cayenne-low-power-payload)
 
 Usage
 -----
 
 ```haskell
-import Data.TTN
-import qualified Data.ByteString.Char8 as B
+import qualified Data.Cayene as C
 
 main :: IO ()
 main = do
-  j <- B.readFile "samples/0"
-  case parse j of
-    Left err -> putStrLn err
-    Right t -> print t
+  let x = (0, AnalogIn 4.48)
+  print $ C.decode $ C.encode x
 ```
