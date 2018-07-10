@@ -1,8 +1,7 @@
 cayene-lpp
 ==========
 
-Encode and decode Cayene Low Power Protocol
-(https://github.com/myDevicesIoT/cayenne-docs/blob/master/docs/LORA.md#cayenne-low-power-payload)
+Encode and decode [Cayene Low Power Protocol](https://github.com/myDevicesIoT/cayenne-docs/blob/master/docs/LORA.md#cayenne-low-power-payload)
 
 Usage
 -----
