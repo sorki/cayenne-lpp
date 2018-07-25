@@ -2,7 +2,16 @@
 {-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
-module Data.Cayene.Types where
+module Data.Cayene.Types (
+    Sensor(..)
+  , Channel
+  , Reading
+  , encode
+  , encodeMany
+  , decode
+  , decodeMany
+  , decodeMaybe
+  ) where
 
 import Control.Monad
 import Control.Applicative
@@ -129,8 +138,13 @@ putFloat24 x = do
   putWord8 $ fromIntegral $ x' `shiftR` 16
   putWord16be $ fromIntegral $ x'
 
+-- Encode a single Reading
 encode :: Reading -> BL.ByteString
 encode = runPut . putReading
+
+-- Encode a list of readings
+encodeMany :: [Reading] -> BL.ByteString
+encodeMany = runPut . (mapM_ putReading)
 
 getWord16 :: Get Word16
 getWord16 = getWord16be
@@ -153,12 +167,15 @@ getChannel = fromIntegral <$> getWord8
 clppP :: Get Reading
 clppP = (,) <$> getChannel <*> getSensor
 
+-- Decode a single Reading, may fail
 decode :: BL.ByteString -> Reading
 decode = runGet clppP
 
+-- Decode multiple Readings, returns empty list if nothing is decoded
 decodeMany :: BL.ByteString -> [Reading]
 decodeMany = runGet $ many clppP
 
+-- Maybe decode a single reading
 decodeMaybe :: BL.ByteString -> Maybe Reading
 decodeMaybe x = case runGetOrFail clppP x of
   Left _ -> Nothing
