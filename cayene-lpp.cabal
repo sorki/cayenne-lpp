@@ -2,7 +2,7 @@ name:                cayene-lpp
 version:             0.1.0.0
 synopsis:            Cayenne Low Power Payload
 description:         Cayenne Low Power Payload format encoding and decoding
-homepage:            https://github.com/sorki/data-cayene-lpp
+homepage:            https://github.com/sorki/cayene-lpp
 license:             BSD3
 license-file:        LICENSE
 author:              Richard Marko
@@ -38,4 +38,4 @@ test-suite cayene-lpp-tests
 
 source-repository head
   type:     git
-  location: https://github.com/sorki/data-ttn
+  location: https://github.com/sorki/cayene-lpp
