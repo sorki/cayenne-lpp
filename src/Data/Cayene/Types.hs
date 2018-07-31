@@ -1,3 +1,17 @@
+{-|
+Description : Cayene Low Power Protocol encoding and decoding
+Maintainer  : srk <srk@48.io>
+
+Encoding example:
+@
+  import qualified Data.Cayene as CLPP
+  import qualified Data.ByteString.Base16.Lazy as B16L
+  import qualified Data.ByteString.Lazy.Char8 as BSL
+
+  BSL.putStrLn $ B16L.encode . CLPP.encodeMany [(7, Illum 1337), (0, Power 13.5)]
+@
+
+-}
 {-# LANGUAGE RecordWildCards     #-}
 {-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE ScopedTypeVariables #-}
@@ -28,25 +42,25 @@ type Channel = Int
 type Reading = (Channel, Sensor)
 
 data Sensor =
-    DigitalIn     Word8
-  | DigitalOut    Word8
-  | AnalogIn      Float
-  | AnalogOut     Float
-  | Illum         Word16
-  | Presence      Word8
-  | Temperature   Float
-  | Humidity      Float
-  | Accelerometer Float Float Float
-  | Barometer     Float
-  | Voltage       Float
-  | Current       Float
-  | Percentage    Float
-  | Pressure      Float
-  | Power         Float
-  | Energy        Float
-  | Direction     Word8
-  | Gyrometer     Float Float Float
-  | GPS           Float Float Float
+    DigitalIn     Word8              -- ^ Digital input (8 bits)
+  | DigitalOut    Word8              -- ^ Digital output (8 bits)
+  | AnalogIn      Float              -- ^ Analog input
+  | AnalogOut     Float              -- ^ Analog output
+  | Illum         Word16             -- ^ Illuminance sensor (Lux)
+  | Presence      Word8              -- ^ Presence
+  | Temperature   Float              -- ^ Temperature (Celsius)
+  | Humidity      Float              -- ^ Humidity (%)
+  | Accelerometer Float Float Float  -- ^ Accelerometer (G)
+  | Barometer     Float              -- ^ Barometer (hPa)
+  | Voltage       Float              -- ^ Voltage (V)
+  | Current       Float              -- ^ Current (A)
+  | Percentage    Float              -- ^ Percentage
+  | Pressure      Float              -- ^ Pressure
+  | Power         Float              -- ^ Power (W)
+  | Energy        Float              -- ^ Energy (J)
+  | Direction     Word8              -- ^ ??? (this should probably be Word16)
+  | Gyrometer     Float Float Float  -- ^ Gyrometer (°/s)
+  | GPS           Float Float Float  -- ^ GPS Latitude (°) ,Longitude (°), Altitude (m)
   deriving (Eq, Ord, Show)
 
 toID :: Sensor -> Int
@@ -138,11 +152,11 @@ putFloat24 x = do
   putWord8 $ fromIntegral $ x' `shiftR` 16
   putWord16be $ fromIntegral $ x'
 
--- Encode a single Reading
+-- | Encode a single 'Reading'
 encode :: Reading -> BL.ByteString
 encode = runPut . putReading
 
--- Encode a list of readings
+-- | Encode a list of 'Reading's
 encodeMany :: [Reading] -> BL.ByteString
 encodeMany = runPut . (mapM_ putReading)
 
@@ -167,15 +181,15 @@ getChannel = fromIntegral <$> getWord8
 clppP :: Get Reading
 clppP = (,) <$> getChannel <*> getSensor
 
--- Decode a single Reading, may fail
+-- | Decode a single 'Reading', may fail
 decode :: BL.ByteString -> Reading
 decode = runGet clppP
 
--- Decode multiple Readings, returns empty list if nothing is decoded
+-- | Decode multiple 'Reading's, returns empty list if nothing is decoded
 decodeMany :: BL.ByteString -> [Reading]
 decodeMany = runGet $ many clppP
 
--- Maybe decode a single reading
+-- | Maybe decode a single 'Reading'
 decodeMaybe :: BL.ByteString -> Maybe Reading
 decodeMaybe x = case runGetOrFail clppP x of
   Left _ -> Nothing
