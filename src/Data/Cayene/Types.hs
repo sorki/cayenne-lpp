@@ -3,13 +3,12 @@ Description : Cayene Low Power Protocol encoding and decoding
 Maintainer  : srk <srk@48.io>
 
 Encoding example:
-@
-  import qualified Data.Cayene as CLPP
-  import qualified Data.ByteString.Base16.Lazy as B16L
-  import qualified Data.ByteString.Lazy.Char8 as BSL
 
-  BSL.putStrLn $ B16L.encode . CLPP.encodeMany [(7, Illum 1337), (0, Power 13.5)]
-@
+> import qualified Data.Cayene as CLPP
+> import qualified Data.ByteString.Base16.Lazy as B16L
+> import qualified Data.ByteString.Lazy.Char8 as BSL
+>
+> BSL.putStrLn $ B16L.encode . CLPP.encodeMany [(7, Illum 1337), (0, Power 13.5)]
 
 -}
 {-# LANGUAGE RecordWildCards     #-}
