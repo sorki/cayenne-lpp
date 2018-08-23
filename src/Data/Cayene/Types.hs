@@ -14,6 +14,7 @@ Encoding example:
 {-# LANGUAGE RecordWildCards     #-}
 {-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE DeriveGeneric       #-}
 
 module Data.Cayene.Types (
     Sensor(..)
@@ -29,6 +30,7 @@ module Data.Cayene.Types (
 import Control.Monad
 import Control.Applicative
 import Data.Monoid
+import GHC.Generics
 
 import Data.Bits
 import Data.Binary.Get
@@ -60,7 +62,7 @@ data Sensor =
   | Direction     Word8              -- ^ ??? (this should probably be Word16)
   | Gyrometer     Float Float Float  -- ^ Gyrometer (°/s)
   | GPS           Float Float Float  -- ^ GPS Latitude (°) ,Longitude (°), Altitude (m)
-  deriving (Eq, Ord, Show)
+  deriving (Eq, Ord, Show, Generic)
 
 toID :: Sensor -> Int
 toID (DigitalIn _)         = 0x0
