@@ -65,10 +65,10 @@ data Sensor =
   deriving (Eq, Ord, Show, Generic)
 
 toID :: Sensor -> Int
-toID (DigitalIn _)         = 0x0
-toID (DigitalOut _)        = 0x1
-toID (AnalogIn _)          = 0x2
-toID (AnalogOut _)         = 0x3
+toID (DigitalIn _)         = 0x00
+toID (DigitalOut _)        = 0x01
+toID (AnalogIn _)          = 0x02
+toID (AnalogOut _)         = 0x03
 toID (Illum _)             = 0x65
 toID (Presence _)          = 0x66
 toID (Temperature _)       = 0x67
