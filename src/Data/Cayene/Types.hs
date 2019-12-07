@@ -59,7 +59,7 @@ data Sensor =
   | Pressure      Float              -- ^ Pressure
   | Power         Float              -- ^ Power (W)
   | Energy        Float              -- ^ Energy (J)
-  | Direction     Word8              -- ^ ??? (this should probably be Word16)
+  | Direction     Float              -- ^ Angle (Deg)
   | Gyrometer     Float Float Float  -- ^ Gyrometer (°/s)
   | GPS           Float Float Float  -- ^ GPS Latitude (°) ,Longitude (°), Altitude (m)
   deriving (Eq, Ord, Show, Generic)
@@ -103,7 +103,7 @@ getSensor =
   <|> (isID 0x7b) *> (Pressure      <$> ((/10)  <$> getFloat16))
   <|> (isID 0x80) *> (Power         <$> ((/10)  <$> getFloat16))
   <|> (isID 0x83) *> (Energy        <$> ((/10)  <$> getFloat16))
-  <|> (isID 0x84) *> (Direction     <$> getWord8)
+  <|> (isID 0x84) *> (Direction     <$> getFloat16)
   <|> (isID 0x86) *> (Gyrometer     <$> ((/100) <$> getFloat16) <*> ((/100) <$> getFloat16) <*> ((/100) <$> getFloat16))
   <|> (isID 0x88) *> (GPS           <$> ((/10000) <$> getFloat24) <*> ((/10000) <$> getFloat24) <*> ((/100) <$> getFloat24))
 
@@ -131,7 +131,7 @@ putSensor'  (Percentage x)        =  putFloat16 x
 putSensor'  (Pressure x)          = (putFloat16 . (*10)) x
 putSensor'  (Power x)             = (putFloat16 . (*10)) x
 putSensor'  (Energy x)            = (putFloat16 . (*10)) x
-putSensor'  (Direction x)         =  putWord8 x
+putSensor'  (Direction x)         =  putFloat16 x
 putSensor'  (Gyrometer x y z)     = (putFloat16 . (*100)) x >> (putFloat16 . (*100)) y >> (putFloat16 . (*100)) z
 putSensor'  (GPS x y z)           = (putFloat24 . (*10000)) x >> (putFloat24 . (*10000)) y >> (putFloat24 . (*100)) z
 
