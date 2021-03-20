@@ -1,13 +1,13 @@
-cayene-lpp
+cayenne-lpp
 ==========
 
-Encode and decode [Cayene Low Power Protocol](https://github.com/myDevicesIoT/cayenne-docs/blob/master/docs/LORA.md#cayenne-low-power-payload)
+Encode and decode [Cayenne Low Power Protocol](https://github.com/myDevicesIoT/cayenne-docs/blob/master/docs/LORA.md#cayenne-low-power-payload)
 
 Usage
 -----
 
 ```haskell
-import qualified Data.Cayene as C
+import qualified Data.Cayenne as C
 
 main :: IO ()
 main = do

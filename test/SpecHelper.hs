@@ -1,7 +1,7 @@
 module SpecHelper
     ( module Test.Hspec
-    , module Data.Cayene
+    , module Data.Cayenne
     ) where
 
 import Test.Hspec
-import Data.Cayene
+import Data.Cayenne

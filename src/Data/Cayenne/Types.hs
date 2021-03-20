@@ -1,10 +1,10 @@
 {-|
-Description : Cayene Low Power Protocol encoding and decoding
+Description : Cayenne Low Power Protocol encoding and decoding
 Maintainer  : srk <srk@48.io>
 
 Encoding example:
 
-> import qualified Data.Cayene as CLPP
+> import qualified Data.Cayenne as CLPP
 > import qualified Data.ByteString.Base16.Lazy as B16L
 > import qualified Data.ByteString.Lazy.Char8 as BSL
 >
@@ -16,7 +16,7 @@ Encoding example:
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE DeriveGeneric       #-}
 
-module Data.Cayene.Types (
+module Data.Cayenne.Types (
     Sensor(..)
   , Channel
   , Reading
