@@ -1,5 +1,5 @@
 name:                cayenne-lpp
-version:             0.1.0.0
+version:             0.2.0.0
 synopsis:            Cayenne Low Power Payload
 description:         Cayenne Low Power Payload format encoding and decoding
 homepage:            https://github.com/sorki/cayenne-lpp
